@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -8,7 +8,6 @@ import {
 } from 'react-navigation';
 import {observer} from 'mobx-react';
 import {Choice} from 'src/stores/PollListStore';
-import {TouchableHighlight} from 'react-native-gesture-handler';
 import {ChoiceItem} from '../components/ChoiceItem';
 import {useStore} from '../stores';
 
@@ -17,9 +16,12 @@ interface Props
 
 const renderChoice = (choice: Choice, handleVote: () => void) => {
   return (
-    <TouchableHighlight key={choice.choice} onPress={handleVote}>
+    <TouchableOpacity
+      key={`${choice.url}`}
+      onPress={handleVote}
+      style={styles.choiceContainer}>
       <ChoiceItem choice={choice} />
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };
 
@@ -31,8 +33,8 @@ const PollDetailPage: NavigationScreenComponent<{}, Props> = observer(
       pollList.vote(voteUrl, navigation.goBack);
     };
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>{pollDetails.question}</Text>
+      <View style={styles.container}>
+        <Text style={styles.sectionTitle}>{pollDetails.question}</Text>
         {pollDetails.choices.map((choice: Choice) =>
           renderChoice(choice, () => handleVote(choice.url)),
         )}
@@ -50,3 +52,23 @@ PollDetailPage.navigationOptions = (
 };
 
 export default PollDetailPage;
+
+const styles = StyleSheet.create({
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+  },
+  container: {
+    flex: 1,
+    padding: 30,
+    backgroundColor: '#b4d1d2',
+  },
+  choiceContainer: {
+    padding: 10,
+    marginVertical: 3,
+    borderColor: '#beddb2',
+    borderWidth: 3,
+    borderRadius: 10,
+    backgroundColor: '#c1b7d4',
+  },
+});

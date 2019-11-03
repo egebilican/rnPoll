@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableHighlight} from 'react-native';
+import {View, Text, TouchableHighlight, TouchableOpacity} from 'react-native';
 import {Poll} from '../stores/PollListStore';
 import {PollItem} from './PollItem';
 
@@ -9,9 +9,9 @@ export const PollList: React.FC<{
 }> = ({polls, goToDetail}) => {
   const renderPoll = (poll: Poll) => {
     return (
-      <TouchableHighlight key={poll.url} onPress={() => goToDetail(poll)}>
+      <TouchableOpacity key={poll.url} onPress={() => goToDetail(poll)}>
         <PollItem poll={poll}>{poll.question}</PollItem>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   };
 

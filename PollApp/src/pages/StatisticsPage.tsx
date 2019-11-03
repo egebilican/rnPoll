@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -17,8 +17,8 @@ const StatisticsPage: NavigationScreenComponent<{}, Props> = observer(
   ({navigation}) => {
     const {pollList} = useStore();
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Statistics</Text>
+      <View style={styles.container}>
+        <Text style={styles.sectionTitle}>Very Important Statistic</Text>
         <Text>{`In this session you have voted ${
           pollList.voteCount
         } times`}</Text>
@@ -36,3 +36,17 @@ StatisticsPage.navigationOptions = (
 };
 
 export default StatisticsPage;
+
+const styles = StyleSheet.create({
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+  },
+  container: {
+    flex: 1,
+    padding: 30,
+    backgroundColor: '#b4d1d2',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

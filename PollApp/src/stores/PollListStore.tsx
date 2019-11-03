@@ -72,12 +72,11 @@ export class PollListStore {
 
   @action
   async createQuestion(body: NewQuestionBody, goBack: () => void) {
-    console.log('here we are');
     try {
       this.state = 'posting';
       const response = await createQuestion(body);
       this.state = 'posted';
-      //goBack();
+      goBack();
     } catch (error) {
       runInAction(() => {
         this.state = 'error';

@@ -3,7 +3,7 @@ import React from 'react';
 import {render, fireEvent} from 'react-native-testing-library';
 import {Poll} from '../src/stores/PollListStore';
 import {PollList} from '../src/components/PollList';
-import {TouchableHighlight} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 
 it('renders poll list', () => {
   const mockPollList: Poll[] = [
@@ -24,7 +24,7 @@ it('renders poll list', () => {
   const {queryAllByType} = render(
     <PollList polls={mockPollList} goToDetail={() => mockFn()} />,
   );
-  const shownPolls = queryAllByType(TouchableHighlight);
+  const shownPolls = queryAllByType(TouchableOpacity);
   expect(shownPolls.length).toBe(2);
   if (shownPolls[0]) {
     fireEvent.press(shownPolls[0]);

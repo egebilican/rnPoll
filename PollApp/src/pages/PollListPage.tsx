@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Button, Alert} from 'react-native';
+import {ScrollView, Text, Button, Alert, StyleSheet, View} from 'react-native';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -24,16 +24,16 @@ const PollListPage: NavigationScreenComponent<{}, Props> = observer(
       navigation.navigate('Details', {poll});
     };
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <ScrollView style={styles.container}>
         {pollList.polls && pollList.polls.length > 0 ? (
           <View>
-            <Text>Here are list of questions</Text>
+            <Text style={styles.sectionTitle}>Active Polls</Text>
             <PollList polls={pollList.polls} goToDetail={goToDetail} />
           </View>
         ) : (
           <Text>Waiting</Text>
         )}
-      </View>
+      </ScrollView>
     );
   },
 );
@@ -58,10 +58,22 @@ PollListPage.navigationOptions = ({navigation}) => {
           )
         }
         title="Create"
-        color="red"
+        color="black"
       />
     ),
   };
 };
 
 export default PollListPage;
+
+const styles = StyleSheet.create({
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+  },
+  container: {
+    flex: 1,
+    padding: 30,
+    backgroundColor: '#b4d1d2',
+  },
+});

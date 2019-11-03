@@ -1,12 +1,12 @@
 import {createAppContainer} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
-import PollListPage from './PollListPage';
 import PollDetailPage from './PollDetailPage';
 import {createStackNavigator} from 'react-navigation-stack';
 import {StoreProvider} from '../stores';
 import React from 'react';
 import CreatePollPage from './CreatePollPage';
 import StatisticsPage from './StatisticsPage';
+import PollListPage from './PollListPage';
 
 const PollListNavigation = createStackNavigator(
   {
@@ -26,6 +26,10 @@ const AppNavigator = createBottomTabNavigator(
   },
   {
     initialRouteName: 'PollList',
+    tabBarOptions: {
+      activeTintColor: 'black',
+      inactiveTintColor: '#b69dba',
+    },
   },
 );
 
