@@ -15,10 +15,8 @@ interface Props
 const PollListPage: NavigationScreenComponent<{}, Props> = observer(() => {
   const {pollList} = useStore();
   React.useEffect(() => {
-    console.log('fetching polls');
     pollList.fetchPolls();
   }, []);
-  console.log('POLLS', pollList.polls);
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>List of available polls</Text>
