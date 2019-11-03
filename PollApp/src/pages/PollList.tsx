@@ -4,14 +4,13 @@ import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState,
+  NavigationScreenComponent,
 } from 'react-navigation';
 
-interface NavStatelessComponent extends React.StatelessComponent {
-  navigation?: NavigationScreenProp<NavigationState, NavigationParams>;
-  navigationOptions?: Object;
-}
+interface Props
+  extends NavigationScreenProp<NavigationState, NavigationParams> {}
 
-const PollListPage: NavStatelessComponent = () => {
+const PollListPage: NavigationScreenComponent<{}, Props> = () => {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>List of available polls</Text>
@@ -19,7 +18,9 @@ const PollListPage: NavStatelessComponent = () => {
   );
 };
 
-PollListPage.navigationOptions = ({navigation}: NavStatelessComponent) => {
+PollListPage.navigationOptions = (
+  props: NavigationScreenProp<NavigationState, NavigationParams>,
+) => {
   return {
     title: 'All Polls',
     headerRight: () => (
