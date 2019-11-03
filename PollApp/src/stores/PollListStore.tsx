@@ -28,7 +28,8 @@ export class PollListStore {
 
   //TODO: make it meaningful
   @observable
-  state: string = 'idle';
+  state: 'idle' | 'downloading' | 'error' | 'posting' | 'posted' | 'voting' =
+    'idle';
 
   @observable
   voteCount: number = 0;
@@ -40,7 +41,7 @@ export class PollListStore {
 
   @action
   async fetchPolls() {
-    this.state = 'Downloading';
+    this.state = 'downloading';
     try {
       const response = await getPolls();
       runInAction(() => {
@@ -49,34 +50,37 @@ export class PollListStore {
       });
     } catch (error) {
       runInAction(() => {
-        this.state = 'Error';
+        this.state = 'error';
       });
     }
   }
+
   @action
   async vote(voteUrl: string, goBack: () => void) {
-    this.state = 'Voting';
+    this.state = 'voting';
     try {
       const response = await vote(voteUrl);
       this.increaseVoteCount();
+      this.state = 'idle';
       goBack();
     } catch (error) {
       runInAction(() => {
-        this.state = 'Error in voting';
+        this.state = 'error';
       });
     }
   }
 
   @action
   async createQuestion(body: NewQuestionBody, goBack: () => void) {
-    this.state = 'Creating Question';
+    console.log('here we are');
     try {
+      this.state = 'posting';
       const response = await createQuestion(body);
-      this.increaseVoteCount();
-      goBack();
+      this.state = 'posted';
+      //goBack();
     } catch (error) {
       runInAction(() => {
-        this.state = 'Error in creating';
+        this.state = 'error';
       });
     }
   }

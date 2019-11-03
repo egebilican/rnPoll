@@ -7,38 +7,35 @@ import {
   act,
   waitForElement,
 } from 'react-native-testing-library';
-import {PollListStore} from '../src/stores/PollListStore';
-import {Provider} from 'mobx-react';
 import mockAxios from 'axios';
 import {TouchableHighlight} from 'react-native';
+import {StoreProvider} from '../src/stores';
 
-const renderWithStore = (pollListStore: PollListStore) =>
+const renderWithStore = () =>
   render(
-    <Provider pollListStore={pollListStore}>
-      <CreatePollPage />
-    </Provider>,
+    <StoreProvider>
+      <CreatePollPage navigation={{navigate: () => {}}} />
+    </StoreProvider>,
   );
 
 it('renders page', () => {
-  const pollListStore = new PollListStore();
-  const {getByText} = renderWithStore(pollListStore);
+  const {getByText} = renderWithStore();
   expect(getByText('Question:')).toBeDefined();
-  //   expect(getByText('Choices:')).toBeDefined();
 });
 
 it('renders buttons', () => {
-  const pollListStore = new PollListStore();
-  const {queryAllByType} = renderWithStore(pollListStore);
+  const {queryAllByType} = renderWithStore();
   const shownTouchables = queryAllByType(TouchableHighlight);
   expect(shownTouchables.length).toBe(2);
 });
 
 it('creates new question', async () => {
-  //TODO: add post mock
-  const pollListStore = new PollListStore();
-  const {getByA11yLabel, getByText, queryAllByType} = renderWithStore(
-    pollListStore,
-  );
+  const {
+    getByA11yLabel,
+    getByText,
+    queryAllByType,
+    getByTestId,
+  } = renderWithStore();
   const shownTouchables = queryAllByType(TouchableHighlight);
 
   const questionInput = getByA11yLabel('New Question');
@@ -70,6 +67,11 @@ it('creates new question', async () => {
     await waitForElement(() => getByText('Second Choice'));
   });
   await act(async () => {
-    await fireEvent.press(submitButton);
+    fireEvent.press(submitButton);
   });
+  await act(async () => {
+    await waitForElement(() => getByTestId('wait'));
+  });
+
+  expect(mockAxios.post).toHaveBeenCalled();
 });

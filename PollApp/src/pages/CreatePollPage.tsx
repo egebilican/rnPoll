@@ -31,9 +31,11 @@ const CreatePollPage: NavigationScreenComponent<{}, Props> = observer(
       question: '',
       choices: [],
     };
+
     const handleSubmit = (values: NewQuestionBody) => {
       pollList.createQuestion(values, navigation.goBack);
     };
+
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Formik
@@ -49,6 +51,9 @@ const CreatePollPage: NavigationScreenComponent<{}, Props> = observer(
             errors,
           }) => (
             <View>
+              {pollList.state === 'posting' && (
+                <Text testID="wait">Please wait</Text>
+              )}
               <Text>Question:</Text>
               <TextInput
                 onChangeText={handleChange('question')}

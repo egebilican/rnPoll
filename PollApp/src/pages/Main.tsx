@@ -6,6 +6,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 import {StoreProvider} from '../stores';
 import React from 'react';
 import CreatePollPage from './CreatePollPage';
+import StatisticsPage from './StatisticsPage';
 
 const PollListNavigation = createStackNavigator(
   {
@@ -21,8 +22,7 @@ const PollListNavigation = createStackNavigator(
 const AppNavigator = createBottomTabNavigator(
   {
     PollList: createAppContainer(PollListNavigation),
-    Statistics: PollListPage,
-    Random: PollListPage,
+    Statistics: StatisticsPage,
   },
   {
     initialRouteName: 'PollList',

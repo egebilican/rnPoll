@@ -5,17 +5,17 @@ import {render, waitForElement, act} from 'react-native-testing-library';
 import {PollListStore} from '../src/stores/PollListStore';
 import {Provider} from 'mobx-react';
 import mockAxios from 'axios';
+import {StoreProvider} from '../src/stores';
 
-const renderWithStore = (pollListStore: PollListStore) =>
+const renderWithStore = () =>
   render(
-    <Provider pollListStore={pollListStore}>
+    <StoreProvider>
       <PollList />
-    </Provider>,
+    </StoreProvider>,
   );
 
 it('renders header', () => {
-  const pollListStore = new PollListStore();
-  const {getByText} = renderWithStore(pollListStore);
+  const {getByText} = renderWithStore();
   expect(getByText('Waiting')).toBeDefined();
 });
 
@@ -25,8 +25,7 @@ it('renders polls', async () => {
       data: [{question: 'Dummy Poll', url: 'dummy'}],
     }),
   );
-  const pollListStore = new PollListStore();
-  const {getByTestId, getByText} = renderWithStore(pollListStore);
+  const {getByTestId, getByText} = renderWithStore();
   await act(async () => {
     await waitForElement(() => getByTestId('pollList'));
   });

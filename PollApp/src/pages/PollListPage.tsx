@@ -57,7 +57,7 @@ PollListPage.navigationOptions = ({navigation}) => {
             {cancelable: false},
           )
         }
-        title="Add"
+        title="Create"
         color="red"
       />
     ),
