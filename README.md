@@ -5,21 +5,29 @@ Using React Native, MobX, React Navigation, Jest, React Native Testing Library
 Instructions:
 
 1)Clone the repo:
-git clone https://github.com/egebilican/rnPoll.git
 
-2)Go to the folder
-cd PollApp
+### `git clone https://github.com/egebilican/rnPoll.git`
 
-3)Install packages
-yarn
+2)Go to the folder:
 
-4)install pods
-cd ios
-pod install
-cd ..
+### `cd PollApp`
+
+3)Install packages:
+
+### `yarn`
+
+4)install pods:
+
+### `cd ios`
+
+### `pod install`
+
+### `cd ..`
 
 5)Run the app
-npx react-native run-ios
+
+### `npx react-native run-ios`
 
 6)For testing
-yarn jest --watch
+
+### `yarn jest --watch`
