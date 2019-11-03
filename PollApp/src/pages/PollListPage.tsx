@@ -9,25 +9,31 @@ import {
 import {useStore} from '../stores';
 import {observer} from 'mobx-react';
 import {PollList} from '../components/PollList';
+import {Poll} from 'src/stores/PollListStore';
 
 interface Props
   extends NavigationScreenProp<NavigationState, NavigationParams> {}
 
-const PollListPage: NavigationScreenComponent<{}, Props> = observer(() => {
-  const {pollList} = useStore();
-  React.useEffect(() => {
-    pollList.fetchPolls();
-  }, []);
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      {pollList.polls && pollList.polls.length > 0 ? (
-        <PollList polls={pollList.polls} />
-      ) : (
-        <Text>Waiting</Text>
-      )}
-    </View>
-  );
-});
+const PollListPage: NavigationScreenComponent<{}, Props> = observer(
+  ({navigation}) => {
+    const {pollList} = useStore();
+    React.useEffect(() => {
+      pollList.fetchPolls();
+    }, []);
+    const goToDetail = (poll: Poll) => {
+      navigation.navigate('Details', {poll});
+    };
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        {pollList.polls && pollList.polls.length > 0 ? (
+          <PollList polls={pollList.polls} goToDetail={goToDetail} />
+        ) : (
+          <Text>Waiting</Text>
+        )}
+      </View>
+    );
+  },
+);
 
 PollListPage.navigationOptions = (
   props: NavigationScreenProp<NavigationState, NavigationParams>,

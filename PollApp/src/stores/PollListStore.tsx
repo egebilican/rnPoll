@@ -1,11 +1,19 @@
 import {observable, action, runInAction} from 'mobx';
 import getPolls from '../services/getPolls';
+import vote from '../services/vote';
 
-export const BASE_URL: string = 'http://polls.apiblueprint.org/';
+export const BASE_URL: string =
+  'https://private-2b230e-pollsapi.apiary-proxy.com/';
 
 export interface Poll {
-  choices: any;
+  choices: Choice[];
   question: any;
+  url: string;
+}
+
+export interface Choice {
+  choice: string;
+  votes: number;
   url: string;
 }
 
@@ -40,13 +48,10 @@ export class PollListStore {
     }
   }
   @action
-  async vote(url: string, voteId: number, goBack: any) {
+  async vote(voteUrl: string, goBack: any) {
     this.state = 'Voting';
-    console.log(`voting url: ${BASE_URL}${url}/choices/${voteId}`);
     try {
-      const response = await fetch(`${BASE_URL}${url}/choices/${voteId}`, {
-        method: 'POST',
-      });
+      const response = await vote(voteUrl);
       console.log('Vote resp', response);
       this.increaseVoteCount();
       goBack();

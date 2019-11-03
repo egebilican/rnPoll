@@ -1,6 +1,7 @@
 import {createAppContainer} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import PollListPage from './PollListPage';
+import PollDetailPage from './PollDetailPage';
 import {createStackNavigator} from 'react-navigation-stack';
 import {StoreProvider} from '../stores';
 import React from 'react';
@@ -8,7 +9,7 @@ import React from 'react';
 const PollListNavigation = createStackNavigator(
   {
     Home: PollListPage,
-    Details: PollListPage,
+    Details: PollDetailPage,
   },
   {
     initialRouteName: 'Home',
