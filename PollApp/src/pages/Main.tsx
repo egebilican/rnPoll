@@ -2,6 +2,8 @@ import {createAppContainer} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import PollListPage from './PollList';
 import {createStackNavigator} from 'react-navigation-stack';
+import {StoreProvider} from '../stores';
+import React from 'react';
 
 const PollListNavigation = createStackNavigator(
   {
@@ -24,4 +26,12 @@ const AppNavigator = createBottomTabNavigator(
   },
 );
 
-export const Main = createAppContainer(AppNavigator);
+const MainNavigation = createAppContainer(AppNavigator);
+
+export const Main: React.FC<{}> = () => {
+  return (
+    <StoreProvider>
+      <MainNavigation />
+    </StoreProvider>
+  );
+};

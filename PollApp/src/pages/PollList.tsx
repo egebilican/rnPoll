@@ -6,17 +6,25 @@ import {
   NavigationState,
   NavigationScreenComponent,
 } from 'react-navigation';
+import {useStore} from '../stores';
+import {observer} from 'mobx-react';
 
 interface Props
   extends NavigationScreenProp<NavigationState, NavigationParams> {}
 
-const PollListPage: NavigationScreenComponent<{}, Props> = () => {
+const PollListPage: NavigationScreenComponent<{}, Props> = observer(() => {
+  const {pollList} = useStore();
+  React.useEffect(() => {
+    console.log('fetching polls');
+    pollList.fetchPolls();
+  }, []);
+  console.log('POLLS', pollList.polls);
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>List of available polls</Text>
     </View>
   );
-};
+});
 
 PollListPage.navigationOptions = (
   props: NavigationScreenProp<NavigationState, NavigationParams>,
