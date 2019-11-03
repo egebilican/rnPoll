@@ -58,7 +58,6 @@ export class PollListStore {
     this.state = 'Voting';
     try {
       const response = await vote(voteUrl);
-      console.log('Vote resp', response);
       this.increaseVoteCount();
       goBack();
     } catch (error) {
@@ -67,13 +66,12 @@ export class PollListStore {
       });
     }
   }
+
   @action
   async createQuestion(body: NewQuestionBody, goBack: () => void) {
     this.state = 'Creating Question';
-    console.log('hey', body);
     try {
       const response = await createQuestion(body);
-      console.log('create question', response);
       this.increaseVoteCount();
       goBack();
     } catch (error) {

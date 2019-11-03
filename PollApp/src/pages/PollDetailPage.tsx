@@ -9,7 +9,7 @@ import {
 import {observer} from 'mobx-react';
 import {Choice} from 'src/stores/PollListStore';
 import {TouchableHighlight} from 'react-native-gesture-handler';
-import {ChiceItem} from '../components/ChoiceItem';
+import {ChoiceItem} from '../components/ChoiceItem';
 import {useStore} from '../stores';
 
 interface Props
@@ -18,7 +18,7 @@ interface Props
 const renderChoice = (choice: Choice, handleVote: () => void) => {
   return (
     <TouchableHighlight key={choice.choice} onPress={handleVote}>
-      <ChiceItem choice={choice} />
+      <ChoiceItem choice={choice} />
     </TouchableHighlight>
   );
 };
