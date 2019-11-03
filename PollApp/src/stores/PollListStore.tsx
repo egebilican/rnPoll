@@ -1,6 +1,7 @@
 import {observable, action, runInAction} from 'mobx';
+import getPolls from '../services/getPolls';
 
-const BASE_URL: string = 'http://polls.apiblueprint.org/';
+export const BASE_URL: string = 'http://polls.apiblueprint.org/';
 
 export interface Poll {
   choices: any;
@@ -25,14 +26,12 @@ export class PollListStore {
 
   @action
   async fetchPolls() {
-    this.polls = [];
     this.state = 'Downloading';
     try {
-      const response = await fetch(`${BASE_URL}questions`);
-      const myJson = await response.json();
+      const response = await getPolls();
       runInAction(() => {
         this.state = 'idle';
-        this.polls = myJson;
+        this.polls = response;
       });
     } catch (error) {
       runInAction(() => {

@@ -1,6 +1,6 @@
 import {createAppContainer} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
-import PollListPage from './PollList';
+import PollListPage from './PollListPage';
 import {createStackNavigator} from 'react-navigation-stack';
 import {StoreProvider} from '../stores';
 import React from 'react';

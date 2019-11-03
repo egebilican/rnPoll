@@ -8,6 +8,7 @@ import {
 } from 'react-navigation';
 import {useStore} from '../stores';
 import {observer} from 'mobx-react';
+import {PollList} from '../components/PollList';
 
 interface Props
   extends NavigationScreenProp<NavigationState, NavigationParams> {}
@@ -19,7 +20,11 @@ const PollListPage: NavigationScreenComponent<{}, Props> = observer(() => {
   }, []);
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>List of available polls</Text>
+      {pollList.polls && pollList.polls.length > 0 ? (
+        <PollList polls={pollList.polls} />
+      ) : (
+        <Text>Waiting</Text>
+      )}
     </View>
   );
 });
