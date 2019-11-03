@@ -26,7 +26,10 @@ const PollListPage: NavigationScreenComponent<{}, Props> = observer(
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         {pollList.polls && pollList.polls.length > 0 ? (
-          <PollList polls={pollList.polls} goToDetail={goToDetail} />
+          <View>
+            <Text>Here are list of questions</Text>
+            <PollList polls={pollList.polls} goToDetail={goToDetail} />
+          </View>
         ) : (
           <Text>Waiting</Text>
         )}
@@ -35,9 +38,7 @@ const PollListPage: NavigationScreenComponent<{}, Props> = observer(
   },
 );
 
-PollListPage.navigationOptions = (
-  props: NavigationScreenProp<NavigationState, NavigationParams>,
-) => {
+PollListPage.navigationOptions = ({navigation}) => {
   return {
     title: 'All Polls',
     headerRight: () => (
@@ -51,7 +52,7 @@ PollListPage.navigationOptions = (
                 text: 'Not really',
                 onPress: () => console.log('no'),
               },
-              {text: 'OK', onPress: () => console.log('OK Pressed')},
+              {text: 'OK', onPress: () => navigation.navigate('Create')},
             ],
             {cancelable: false},
           )

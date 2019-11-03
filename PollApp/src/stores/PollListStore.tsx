@@ -1,6 +1,7 @@
 import {observable, action, runInAction} from 'mobx';
 import getPolls from '../services/getPolls';
 import vote from '../services/vote';
+import createQuestion from '../services/createQuestion';
 
 export const BASE_URL: string =
   'https://private-2b230e-pollsapi.apiary-proxy.com/';
@@ -16,11 +17,16 @@ export interface Choice {
   votes: number;
   url: string;
 }
+export interface NewQuestionBody {
+  question: string;
+  choices: string[];
+}
 
 export class PollListStore {
   @observable
   polls: Poll[] = [];
 
+  //TODO: make it meaningful
   @observable
   state: string = 'idle';
 
@@ -48,7 +54,7 @@ export class PollListStore {
     }
   }
   @action
-  async vote(voteUrl: string, goBack: any) {
+  async vote(voteUrl: string, goBack: () => void) {
     this.state = 'Voting';
     try {
       const response = await vote(voteUrl);
@@ -58,6 +64,21 @@ export class PollListStore {
     } catch (error) {
       runInAction(() => {
         this.state = 'Error in voting';
+      });
+    }
+  }
+  @action
+  async createQuestion(body: NewQuestionBody, goBack: () => void) {
+    this.state = 'Creating Question';
+    console.log('hey', body);
+    try {
+      const response = await createQuestion(body);
+      console.log('create question', response);
+      this.increaseVoteCount();
+      goBack();
+    } catch (error) {
+      runInAction(() => {
+        this.state = 'Error in creating';
       });
     }
   }
