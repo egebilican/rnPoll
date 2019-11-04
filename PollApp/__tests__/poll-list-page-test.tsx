@@ -2,8 +2,6 @@ import 'react-native';
 import React from 'react';
 import PollList from '../src/pages/PollListPage';
 import {render, waitForElement, act} from 'react-native-testing-library';
-import {PollListStore} from '../src/stores/PollListStore';
-import {Provider} from 'mobx-react';
 import mockAxios from 'axios';
 import {StoreProvider} from '../src/stores';
 
